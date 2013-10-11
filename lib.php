@@ -1,16 +1,18 @@
 <?php
 	//Add useful global functions here, and require_once this file in any files needing them
+	//database.php is already required here so it shouldn't be required in other files
 	session_start();
 	require_once('database.php');
-	date_default_timezone_set('UTC');
+	//date_default_timezone_set('UTC');
 	authenticateLoginCookie();
 ?>
 	<!--<script src="ckeditor/ckeditor.js"></script>-->
 	<script type="text/javascript">
-		function deletePost(postnum){
+		/*function deletePost(postnum){
 			document.getElementById(postnum).submit();
-		}
+		}*/
 		function changeCSS(sel,set){
+		//CSS changing is completely unnecessary at this point
 			 var value = sel.options[sel.selectedIndex].value;
 			 document.getElementById('coloursheet').href = value;
 			 if (set){
@@ -18,6 +20,7 @@
 			 }
 		}
 		function readCookie(name) {//Copied from stackoverflow
+		//Saves trouble when reading cookies
 			var nameEQ = name + "=";
 			var ca = document.cookie.split(';');
 			for(var i=0;i < ca.length;i++) {
@@ -29,6 +32,7 @@
 		}
 		function setCookie(c_name,value,exdays)
 		{//Copied from w3schools
+		//Saves trouble when setting cookies
 			var exdate=new Date();
 			exdate.setDate(exdate.getDate() + exdays);
 			var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
@@ -53,13 +57,14 @@
 	<link rel="stylesheet" id="coloursheet" type="text/css" href="blackandwhite.css" />
 	<meta charset="UTF-8">
 <?php
-	function convertTimeZone($utctime,$offset){
+	/*function convertTimeZone($utctime,$offset){
 		$datetime = new DateTime($utctime);
 		$tz = new DateTimeZone('UTC');
 		$datetime->setTimeZone($tz);
 		return $datetime->format('M j Y, h:i A');
-	}
+	}*/
 	function is_loggedin(){
+	//Self-explanitory, internal workings could change but otherwise just verifies the current user is logged-in
 		return array_key_exists('user',$_SESSION);
 	}
 	function arrayToXML($array,$type = "Post",$root = "Root"){
@@ -102,7 +107,7 @@
 		}
 		return $sxml->asXML();
 	}
-	function createInput($action, $name, $title="", $postid="", $i=""){
+	/*function createInput($action, $name, $title="", $postid="", $i=""){
 		if ($action == "mail.php"){
 			echo '<form action="'.$action.'" method="post">';
 				form_text_field(
@@ -188,9 +193,9 @@
 			
 			<?php
 		}}
-	}
+	}*/
 	
-	function deleteButton($topicid,$postnum){
+	/*function deleteButton($topicid,$postnum){
 		if (is_array($topicid)){
 			error_log("TOPICID ISARRAY: ".var_export($topicid,true));
 		}
@@ -206,7 +211,7 @@
 			$output .= '</g></svg>';
 		$output .= '</form>';
 		echo $output;
-	}
+	}*/
 	
 	function clear_session()
 	{
@@ -223,10 +228,10 @@
 		  unset($_SESSION[$args[$i].'.err']);
 	  }
 	}
-	function parseBBCode($output){
+	/*function parseBBCode($output){
 		$bbcode = new BBCode;
 		return $bbcode->Parse($output);
-	}
+	}*/
 	function setLogin($name){
 		$_SESSION['user']=$name;
 	}
@@ -240,7 +245,7 @@
 	}
 
 	function form_text_field($label, $tip, $required, $htmlname, $base_sessid, $type,$size = 0)
-	{
+	{//Not wholly necessary, just convenient for the login/registration pages
 	  // Output label...
 	  echo '
 		  <label for="'.htmlspecialchars($htmlname).'">'.
@@ -272,13 +277,14 @@
 	
 	
 	function url_to_redirect_to($relative_url)
-	{
+	{//Don't understand how it works, only that it does work.
 	  $url = 'http';
 	  if (array_key_exists('HTTPS', $_SERVER) && $_SERVER['HTTPS'] == 'on')
 		$url .= 's';
 	  return $url.'://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['REQUEST_URI'])."/".urlencode($relative_url);
 	}
 	function is_valid_email_address($email){
+	//Server-side validation, taken from somewhere so we don't have to do this ourselves
         $qtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
         $dtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
         $atom = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c'.
