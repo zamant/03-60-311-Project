@@ -1,0 +1,30 @@
+
+body { font-family:arial,helvetica,sans-serif;		font-size:12px;	margin: 0; width: 100%; height: 100%;}
+#wrapper {		width: 100%;  height: 100%;		margin:0px auto;				padding:10px;	}
+#header {		height:100%; width:100%;		padding:10px;	border:0; background:#AFEEEE;}	
+#content {		margin-top:10px;		padding-bottom:10px;	}
+#content div {		padding:10px;				float:left;	}	
+#content-left {		width:280px;	}
+#content-left  table{background:#ff345c}	
+#content-main {		margin-left:10px;		width:500px;	}
+#footer {		float:left;		margin-top:10px;		margin-bottom:10px;		padding:10px;			width:878px;	}	
+#bottom {		clear:both;		text-align:centra;	}
+#gallery {width:750px; height:360px; position:relative; border:1px solid #ddd; background:#AFEEEE;}
+#gallery ul {list-style:none; padding:5px; margin:0; width:195px; float:right; height:219px; overflow:auto;}
+#gallery ul li {display:inline; width:50px; height:50px; float:left; margin:0 4px 4px 0; border:1px solid #444; cursor:pointer;}
+#gallery ul li img {display:block; width:50px; height:50px;}
+#gallery ul li span {display:none; position:absolute; left:547px; top:235px; width:200px;font-family:verdana, arial, sans-serif; color:#06a; font-size:11px; line-height:15px; text-align:justify;}
+#gallery ul li span b {color:#444;}
+
+/* required for IE5.x and IE6 to display the start image size correctly */
+#gallery ul li.click i img.default {margin:5px auto 0 auto; width:320px; height:240px; border:1px solid #fff;}
+
+#gallery ul li.off {display:none;}
+
+#gallery ul li.click {border-color:#fc0; background:#f8f8f8; cursor:default;}
+
+#gallery ul li.click i {position:absolute; left:0; top:0; width:545px; height:355px;}
+
+#gallery ul li.click i img {margin:5px auto 0 auto; width:auto; height:auto; border:1px solid #fff;}
+
+#gallery ul li.click span {display:block;}
