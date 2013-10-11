@@ -1,6 +1,6 @@
 <?php
 	require_once("config.php");
-	function getDB(){
+	function newDB(){
 		$dbinfo = dbInfo();
 		$user = $dbinfo['user'];
 		$pass = $dbinfo['pass'];
@@ -12,7 +12,18 @@
 		$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		return $dbh;
 	}
+	function getDB(){//Set up like this in case we want to do persistent connection
+		return newDB();
+	}
 	function dbquery(){
+	//All database queries follow a certain format.
+	//The first argument to the dbquery function is a string, and is the actual query. The next arguments correspond to the values being inserted, in order. That's what the ?s are for. Any number of arguments can be passed so long as all those after the first correspond to a ?.
+	
+	//To insert, for example, it could look like:
+	//dbquery('INSERT INTO Users(Name,Password,Email,PostCode) VALUES (?,?,?,?)',$name,$pass,$email,$postcode)
+	
+	//Selecting, likewise, looks like:
+	//dbquery('SELECT * FROM Users WHERE Name = ?',$name)
 		$args = func_get_args();
 		$numargs = func_num_args();
 		$query = $args[0];
@@ -96,6 +107,8 @@
 		return arrayToXML(getAllPosts($topic_id,$page,$max));
 	}*/
 	function getAllUsers($page,$max){
+	//Page and Max are for if want to only show so many users on one screen. Otherwise make sure to pass a $page of 0 and a sufficiently large $max
+	//Output is an array of arrays, indexed by numerical userID
 		$result = dbquery('SELECT * FROM Users ORDER BY ID LIMIT ?,?',$page*$max,$max);
 		$row = $result->fetch(PDO::FETCH_ASSOC);
 		$output = array();
@@ -104,7 +117,9 @@
 										'Name' => $row['NAME'],
 										'Level' => $row['LEVEL'],
 										'Password' => $row['PASSWORD'],
-										'Email' => $row['EMAIL']
+										'Email' => $row['EMAIL'],
+										'PostCode' => $row['POSTCODE'],
+										'Verified' => $row['VERIFIED']
 										);
 			$row = $result->fetch(PDO::FETCH_ASSOC);
 		}
@@ -235,8 +250,8 @@
 		return $row[0];
 	}*/
 	function getSalt(){
-	//I am and this is a hack - Matt
-		return md5("334");
+	//Password salt for additional security. Not necessary and should probably be done some other way, but it works.
+		return md5("311");
 	}
 	function getUserLevel($username){
 		$user = getUser($username);
@@ -249,7 +264,7 @@
 		$shapass = hash("sha256",$password.getSalt());//sha1($password.getSalt());
 		dbquery('INSERT INTO Users(Name,Password,Email,PostCode) VALUES (?,?,?,?)',htmlspecialchars($name),$shapass,htmlspecialchars($email),htmlspecialchars($postcode));
 	}
-	function newThread($title, $user, $body){
+	/*function newThread($title, $user, $body){
 		$topic_id = newTopic($user,$title);
 		if ($topic_id == 0 || newPost($topic_id,$user,$body) == 0){
 			return 0;
@@ -279,10 +294,10 @@
 		$postnum = getLastPostNum($topic_id);
 		dbquery('UPDATE Topics SET Postindex = Postindex+1, Timestamp = CURRENT_TIMESTAMP WHERE ID = ?',$topic_id);
 		return $postnum;
-	}
+	}*/
 //END NEW
 //EDIT
-
+/*
 	function editThread($title, $topic_id, $postid, $body){
 		if (editTopic($topic_id, $title) == 0 || editPost($topic_id,$postid,$body) == 0){
 			return 0;
@@ -322,9 +337,10 @@
 			return $topic_id;
 		}
 		return 0;
-	}
+	}*/
 //END EDIT
 //DELETE
+/*
 	function deletePost($topic_id,$postnum){
 		$post = getPost($topic_id,$postnum);
 		$currentuser = currentUser();
@@ -359,17 +375,19 @@
 			}
 		}
 		return 0;
-	}
+	}*/
 //END DELETE
 
 //CHECK
 	function currentUser(){
+	//Simply returns info on the currently-logged-in user from the database
 		if (is_loggedin()){
 			return getUser($_SESSION['user']);
 		}
 		return 0;
 	}
 	function checkUser($name,$password){
+	//This is what checks a user's login info
 		$shapass = hash("sha256",$password.getSalt());//sha1($password.getSalt());
 		$user = getUser($name);
 		if (($user['Password']==$shapass)){
@@ -383,6 +401,7 @@
 		}
 	}
 	function checkLoginCookie(){
+	//Used for user persistence across sessions via cookies
 		if (array_key_exists('user', $_COOKIE)){
 			$user = explode("|",$_COOKIE['user']);
 			$results = dbquery('SELECT Token FROM Authentication WHERE Name = ?',$user[0]);
@@ -402,6 +421,7 @@
 	}
 //END CHECK
 	function setLoginCookie($name,$expire){
+	//Counterpart to checkLoginCookie
 		$token = sha1($_SERVER['REMOTE_ADDR'].time());
 		
 		dbquery('DELETE FROM Authentication WHERE Name = ?',$name);
