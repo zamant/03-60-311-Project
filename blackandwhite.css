@@ -1,0 +1,61 @@
+* {COLOR: gray;}
+table { border-color: gray;}
+html {
+	background-image: url(images/background.png);
+}
+body, a {
+	color: #FFFFFF;
+}
+header a{
+	color: #000000;
+}
+
+section{
+
+	border-color: gray;
+}
+
+article {
+
+	background-color: #000000;
+}
+
+tr{
+background-color: #000000;
+border-color:grey;
+}
+
+
+td.postside {
+	border-color: gray;
+}
+
+footer img {
+	border-color: #000000;
+	background-color: #FFFFFF;
+}
+
+aside {
+	background-color: #000000;
+}
+aside a:hover,
+aside a:active,
+nav a:hover,
+nav a:active {
+	background-color: #FFFFFF;
+	color: #000000;
+}
+header, nav {
+	background-color: #FFFFFF;
+	color: #000000;
+}
+nav {
+   border-bottom-color:#000;
+}
+
+nav li	{
+	background-color: #000000;
+
+}
+
+div.formerror {color:red;}

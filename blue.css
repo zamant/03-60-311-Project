@@ -1,0 +1,71 @@
+* {COLOR: #000000;}
+table { border-color: 1111FF;}
+html {
+	background-image: url(images/background.png);
+}
+body, a {
+	color: #FFFFFF;
+}
+header a{
+	color: #000000;
+}
+
+section{
+
+	border-color: gray;
+}
+
+article {
+	color: #888888;
+	background-color: #000099;
+}
+
+tr{
+background-color: #000066;
+border-color:grey;
+}
+
+
+td.postside {
+	border-color: gray;
+}
+
+footer img {
+	border-color: #FFFFFF;
+	background-color: #000000;
+}
+
+aside {
+	background-color: #0033FF;
+}
+aside a:hover,
+aside a:active,
+nav a:hover,
+nav a:active {
+	background-color: #FFFFFF;
+	color: #0033FF;
+}
+label {
+	background-color: #000000;
+	color: #0033FF;
+}
+td{
+	color: #888888;
+}
+p{
+	color: #888888;
+}
+header, nav {
+	background-color: #000000;
+	color: #0033FF;
+}
+nav {
+   border-bottom-color:#FFFFFF;
+}
+
+nav li	{
+	background-color: #000000;
+
+}
+
+div.formerror {color:red;}
