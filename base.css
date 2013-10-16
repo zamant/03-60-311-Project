@@ -1,0 +1,196 @@
+* { font-family: verdana; font-size: 10pt; COLOR: gray; }
+b { font-weight: bold; }
+table { border: 1px solid gray;}
+td { text-align: center; padding: 2px;}
+h2 {text-align: center;}
+
+html {
+	background-image: url(images/background.png);
+}
+body, a {
+	color: #FFFFFF;
+}
+header a{
+	color: #000000;
+}
+a {
+	text-decoration:none;
+}
+a.postlink{
+ float:right;
+}
+input.delete{
+	background: none;
+	border: none;
+	padding:0px;
+	float:right;
+}
+section{
+	
+	width: 90%;
+	margin: 0 auto;
+	border: 1px solid gray;
+}
+article,
+header,
+footer,
+aside {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+article {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	background-color: #000000;
+}
+table
+{
+border-collapse:collapse;
+width:100%;
+table-layout: fixed;
+}
+tr{
+background-color: #000000;
+border: 3px solid grey;
+}
+td{
+	word-wrap: break-word;
+}
+td.postbody {
+	text-align:left;
+	padding:8px;
+}
+td.postside {
+	border: 3px solid gray;
+	width:20%;
+	text-align:left;
+	vertical-align:top;
+}
+td.thread {
+	text-align:left;
+	padding:8px;
+}
+td.thread2 {
+	text-align:right;
+	padding:8px;
+}
+td.threaddelete {
+	width: 5%;
+	padding:8px;
+	vertical-align:top;
+}
+
+footer {
+	clear: both;
+	text-align: center;
+	padding: 20px;
+}
+footer img {
+	border: 2px solid #000000;
+	background-color: #FFFFFF;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+aside header {
+	margin: 0;
+}
+aside nav {
+	padding: 0;
+}
+aside {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	background-color: #000000;
+	float: left;
+	width: 20%;
+	
+}
+aside li {
+	list-style: none;
+}
+aside a:hover,
+aside a:active,
+nav a:hover,
+nav a:active {
+	background-color: #FFFFFF;
+	color: #000000;
+}
+header, nav {
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+	font-size: 24pt;
+	background-color: #FFFFFF;
+	color: #000000;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	text-align: center;
+}
+
+article header {
+	font-size: 16pt;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	margin-left: -10px;
+	margin-right: -10px;
+}
+nav {
+	width: 100%;
+	list-style: none;
+	float:left;
+   width:100%;
+
+   border-bottom:4px solid #000;
+   overflow:hidden;
+   position:relative;
+}
+nav ul {
+   float:left;
+   list-style:none;
+   margin:0;
+   padding:0;
+   position:relative;
+   left:50%;
+   text-align:center;
+}
+nav li	{
+	background-color: #000000;
+	display:block;
+   float:left;
+   list-style:none;
+   margin:0 10px;
+   padding:0;
+   position:relative;
+   right:50%;
+}
+nav a {
+	display:block;
+   padding:3px 10px;
+   text-decoration:none;
+   line-height:1.3em;
+}
+
+div.formerror {color:red;}
+
+form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+label, input {
+    /* in order to define widths */
+    display: inline-block;
+}
+
+label {
+    width: 30%;
+    /* positions the label text beside the input */
+    text-align: right;
+}
+
+label + input {
+    width: 30%;
+    /* large margin-right to force the next element to the new-line
+       and margin-left to create a gutter between the label and input */
+    margin: 0 30% 0 4%;
+}
