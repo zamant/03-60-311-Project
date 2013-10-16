@@ -16,7 +16,7 @@
 		
 	?>
 	<title>
-		311 Project - Fall 2013
+		334 Project - Summer 2013
 	</title>
 </head>
 <body>
@@ -43,6 +43,16 @@
 		$max = intval($_GET['max']);
 	}else{
 		$max = 10;
+	}
+	if(isset($_GET["id"])){
+		if (is_numeric($_GET["id"])){
+			$book = getBook($_GET["id"]);
+			if ($book){
+				testDBOutputs($book);
+			}
+		}
+	}else{
+		testDBInfoOutputs(getAllBooks());
 	}/*
 	if(isset($_GET['action']) && $_GET['action'] == 'post'){
 			//Insert Code for Post

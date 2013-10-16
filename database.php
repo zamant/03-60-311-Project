@@ -106,7 +106,7 @@
 	function getAllPostsXML($topic_id,$page,$max){
 		return arrayToXML(getAllPosts($topic_id,$page,$max));
 	}*/
-	function getAllUsers($page,$max){
+	function getAllUsers($page=0,$max=100){
 	//Page and Max are for if want to only show so many users on one screen. Otherwise make sure to pass a $page of 0 and a sufficiently large $max
 	//Output is an array of arrays, indexed by numerical userID
 		$result = dbquery('SELECT * FROM Users ORDER BY ID LIMIT ?,?',$page*$max,$max);
@@ -125,6 +125,44 @@
 		}
 		return $output;
 	}
+	function getAllBooks($page=0,$max=100,$orderby = 'ID'){
+		//As above with page and max
+		$result = dbquery('SELECT * FROM Books ORDER BY '.$orderby.' LIMIT ?,?',$page*$max,$max);
+		$row = $result->fetch(PDO::FETCH_ASSOC);
+		$output = array();
+		while ($row && ($max-- > 0)){
+			$output[$row['ID']] = array(
+										'Timestamp' => $row['TIMESTAMP'],
+										'Title' => $row['TITLE'],
+										'SellerID' => $row['SELLERID'],
+										'Author' => $row['AUTHOR'],
+										'Price' => $row['PRICE'],
+										'Subject' => $row['SUBJECT'],
+										'Description' => $row['DESCRIPTION']
+										);
+			$row = $result->fetch(PDO::FETCH_ASSOC);
+		}
+		return $output;
+	}
+	function getAllBooksBySeller($page=0,$max=100,$sellerid){
+		$result = dbquery('SELECT * FROM Books WHERE SELLERID = ? ORDER BY '.$orderby.' LIMIT ?,?',$sellerid,$page*$max,$max);
+		$row = $result->fetch(PDO::FETCH_ASSOC);
+		$output = array();
+		while ($row && ($max-- > 0)){
+			$output[$row['ID']] = array(
+										'ID' => $row['ID'],
+										'Timestamp' => $row['TIMESTAMP'],
+										'Title' => $row['TITLE'],
+										'SellerID' => $row['SELLERID'],
+										'Author' => $row['AUTHOR'],
+										'Price' => $row['PRICE'],
+										'Subject' => $row['SUBJECT'],
+										'Description' => $row['DESCRIPTION']
+										);
+			$row = $result->fetch(PDO::FETCH_ASSOC);
+		}
+		return $output;
+	}
 	function getAllUsersXML($page,$max){
 		return arrayToXML(getAllUsers($page,$max),"User");
 	}
@@ -138,6 +176,7 @@
 			return 0;
 		}
 		$output = array(
+						'ID' => $row['ID'],
 						'Name' => $row['NAME'],
 						'Level' => $row['LEVEL'],
 						'Password' => $row['PASSWORD'],
@@ -154,6 +193,7 @@
 			return 0;
 		}
 		$output = array(
+						'ID' => $row['ID'],
 						'Name' => $row['NAME'],
 						'Level' => $row['LEVEL'],
 						'Password' => $row['PASSWORD'],
@@ -162,7 +202,26 @@
 						'Verified' => $row['VERIFIED']
 						);
 		return $output;
-	}/*
+	}
+	function getBook($id){
+		$result = dbquery('SELECT * FROM Books WHERE ID = ?',$id);
+		$row = $result->fetch();
+		if (!$row){
+			return 0;
+		}
+		$output = array(
+						'ID' => $row['ID'],
+						'Timestamp' => $row['TIMESTAMP'],
+						'Title' => $row['TITLE'],
+						'SellerID' => $row['SELLERID'],
+						'Author' => $row['AUTHOR'],
+						'Price' => $row['PRICE'],
+						'Subject' => $row['SUBJECT'],
+						'Description' => $row['DESCRIPTION']
+						);
+		return $output;		
+	}
+	/*
 	function getTopic($topic_id){
 		$result = dbquery('SELECT * FROM Topics WHERE ID = ?',$topic_id);
 		$row = $result->fetch();
@@ -263,6 +322,9 @@
 	function newUser($name,$password,$email,$postcode){
 		$shapass = hash("sha256",$password.getSalt());//sha1($password.getSalt());
 		dbquery('INSERT INTO Users(Name,Password,Email,PostCode) VALUES (?,?,?,?)',htmlspecialchars($name),$shapass,htmlspecialchars($email),htmlspecialchars($postcode));
+	}
+	function newBook($title,$sellerid,$author,$price,$subject,$description){
+		dbquery('INSERT INTO Books(Title,SellerID,Author,Price,Subject,Description) VALUES (?,?,?,?,?,?)',htmlspecialchars($title),$sellerid,htmlspecialchars($author),htmlspecialchars($price),htmlspecialchars($subject),htmlspecialchars($description));
 	}
 	/*function newThread($title, $user, $body){
 		$topic_id = newTopic($user,$title);
