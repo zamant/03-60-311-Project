@@ -300,4 +300,82 @@
         $addr_spec = "$local_part\\x40$domain";
         return preg_match("!^$addr_spec$!", $email) ? 1 : 0;
 	}
+	function handleContactForm($adID,$name,$fromemail,$toemail,$message){
+		$errors = '';
+		if(empty($adID) ||
+			empty($name) ||
+			empty($fromemail) ||
+			empty($toemail) ||
+			empty($message))
+		{
+			$errors .= "Error: All fields are required<br />";
+		}
+
+		if (!is_valid_email_address($fromemail) ||
+			!is_valid_email_address($toemail))
+		{
+			$errors .= "Error: Invalid email address<br />";
+		}
+
+		if( empty($errors))
+		{
+			$email_subject = "Reply to ad #".$adID;
+			$email_body = "You have received a new reply to your ad ".$adID.
+			" Here are the details:\n Name: $name \n Email: $fromemail \n Message \n $message"; 
+			
+			$headers = "From: ".serverEmail()."\n"; 
+			$headers .= "Reply-To: $fromemail";
+			
+			mail($toemail,$email_subject,$email_body,$headers);
+			return 0;
+		} 
+
+		return $errors;
+	}
+	function displayAd($ID){
+		$book = getBook($_GET["id"]);
+			if ($book){
+				testDBOutputs($book);
+			}
+		?>
+		<article>
+		<header>Contact</header>
+		<?php
+			if ($_SESSION['contactresult']){
+				echo $_SESSION['contactresult'];
+				unset($_SESSION['contactresult']);
+			}
+		?>
+		<form action="contact.php" method="POST">
+			<textarea rows="10" cols="30" name="message">
+			</textarea>
+			<?php
+				if (is_loggedin()){
+				$user = currentUser();
+				$fromname = $user['Name'];
+				$fromemail = $user['Email'];
+					echo '<input type="hidden" name = "fromname" value="'.$fromname.'" />';
+					echo '<input type="hidden" name = "fromemail" value="'.$fromemail.'" />';
+				}else{
+			?>
+			<br />
+			Name: <input type="text" name="fromname" />
+			<br />
+			Email Address: <input type="text" name="fromemail" />
+			<?php
+			}
+			echo '<input type="hidden" name="adID" value="'.$ID.'" />';
+			?>
+			<input type="submit" value="Send" />
+		</form>
+	</article>
+	<?php
+	}
+	function displayAllAds(){
+		foreach (getAllBooks() as $book){
+			echo '<a href="index.php?id='.$book['ID'].'">';
+			testDBOutputs($book);
+			echo '</a>';
+		}
+	}
 ?>

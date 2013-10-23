@@ -1,5 +1,7 @@
 <?php
-
+function serverEmail(){
+	return 'post@311bookexchange.ca';
+}
 function dbInfo(){
 	//Username and password to login to the database
 	$user = "laforet3_root";

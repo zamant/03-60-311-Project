@@ -114,6 +114,7 @@
 		$output = array();
 		while ($row && ($max-- > 0)){
 			$output[$row['ID']] = array(
+										'ID' => $row['ID'],
 										'Name' => $row['NAME'],
 										'Level' => $row['LEVEL'],
 										'Password' => $row['PASSWORD'],
@@ -132,6 +133,7 @@
 		$output = array();
 		while ($row && ($max-- > 0)){
 			$output[$row['ID']] = array(
+										'ID' => $row['ID'],
 										'Timestamp' => $row['TIMESTAMP'],
 										'Title' => $row['TITLE'],
 										'SellerID' => $row['SELLERID'],

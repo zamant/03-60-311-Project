@@ -46,13 +46,10 @@
 	}
 	if(isset($_GET["id"])){
 		if (is_numeric($_GET["id"])){
-			$book = getBook($_GET["id"]);
-			if ($book){
-				testDBOutputs($book);
-			}
+			displayAd($_GET["id"]);
 		}
 	}else{
-		testDBInfoOutputs(getAllBooks());
+		displayAllAds();
 	}/*
 	if(isset($_GET['action']) && $_GET['action'] == 'post'){
 			//Insert Code for Post
