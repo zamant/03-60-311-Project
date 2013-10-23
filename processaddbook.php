@@ -128,7 +128,7 @@ if (!$error_flag){
 	if (!$book){
 		$error_flag = TRUE;
 	}else{
-		clear_session('utitle','uauthor','uprice','usubject');
+		clear_session('forminfo','title','author','price','subject');
 	}
 }
 

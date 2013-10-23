@@ -323,10 +323,10 @@
 //NEW
 	function newUser($name,$password,$email,$postcode){
 		$shapass = hash("sha256",$password.getSalt());//sha1($password.getSalt());
-		dbquery('INSERT INTO Users(Name,Password,Email,PostCode) VALUES (?,?,?,?)',htmlspecialchars($name),$shapass,htmlspecialchars($email),htmlspecialchars($postcode));
+		return dbquery('INSERT INTO Users(Name,Password,Email,PostCode) VALUES (?,?,?,?)',htmlspecialchars($name),$shapass,htmlspecialchars($email),htmlspecialchars($postcode));
 	}
 	function newBook($title,$sellerid,$author,$price,$subject,$description){
-		dbquery('INSERT INTO Books(Title,SellerID,Author,Price,Subject,Description) VALUES (?,?,?,?,?,?)',htmlspecialchars($title),$sellerid,htmlspecialchars($author),htmlspecialchars($price),htmlspecialchars($subject),htmlspecialchars($description));
+		return dbquery('INSERT INTO Books(Title,SellerID,Author,Price,Subject,Description) VALUES (?,?,?,?,?,?)',htmlspecialchars($title),$sellerid,htmlspecialchars($author),htmlspecialchars($price),htmlspecialchars($subject),htmlspecialchars($description));
 	}
 	/*function newThread($title, $user, $body){
 		$topic_id = newTopic($user,$title);
