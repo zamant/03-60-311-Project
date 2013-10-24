@@ -16,7 +16,7 @@
 		
 	?>
 	<title>
-		334 Project - Summer 2013
+		311 Project - Fall 2013
 	</title>
 </head>
 <body>
