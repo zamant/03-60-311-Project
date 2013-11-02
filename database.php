@@ -54,10 +54,10 @@
 	}
 	function testDBOutputs($output){
 	//Use this when a single array is expected, like a single user's info
-		echo "<br />";
 		foreach ($output as $key2=>$value2){
 			echo $key2." - ".$value2."|";
 		}
+		echo "<br />";
 	}
 //END TEST
 
@@ -404,6 +404,22 @@
 	}*/
 //END EDIT
 //DELETE
+	function deleteBook($book_id){
+		$book = getBook($book_id);
+		$currentuser = currentUser();
+		if (is_int($currentuser)){
+			return 0;
+		}
+		if ($currentuser['ID'] == $book['SellerID'] || $currentuser['Level'] == 1){
+			$result = dbquery('DELETE FROM Books WHERE ID = ?',$book_id);
+			if (is_int($result) && $result == 0){
+				return 0;
+			}else{
+				return 1;
+			}
+		}
+		return 0;
+	}
 /*
 	function deletePost($topic_id,$postnum){
 		$post = getPost($topic_id,$postnum);

@@ -49,6 +49,9 @@
 			displayAd($_GET["id"]);
 		}
 	}else{
+		if (array_key_exists('del',$_GET) && is_numeric($_GET['del'])){
+			deleteBook($_GET['del']);
+		}
 		displayAllAds();
 	}/*
 	if(isset($_GET['action']) && $_GET['action'] == 'post'){
