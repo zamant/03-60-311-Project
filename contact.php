@@ -1,10 +1,13 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <?php
 error_reporting(E_ALL | E_STRICT);
 require_once("lib.php"); 
 header('Content-Type: text/html');
+
+print_head_snippet();
+
 if (array_key_exists('HTTP_REFERER',$_SERVER)){
 	$_SESSION['previous-page'] = $_SERVER['HTTP_REFERER'];
 }
@@ -32,3 +35,5 @@ if (array_key_exists('HTTP_REFERER',$_SERVER)){
 	}
 exit();
 ?>
+</head>
+</html>

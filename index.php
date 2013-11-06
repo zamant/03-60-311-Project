@@ -1,38 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head> 
-	<?php
-		require_once('lib.php');
+<?php
+		require_once('includes/lib.php');
+
 		clear_session('remailaddress','rpassword','rcpassword','rusername','lpassword','lusername','error','login','registration','rpostcode');
 		$_SESSION['GET'] = $_GET;
-		if (array_key_exists('postnum',$_POST) && array_key_exists('topicid',$_POST)){
-			if (is_loggedin()){
-				deletePost($_POST['topicid'],$_POST['postnum']);
-				if ($_POST['postnum'] == 1){
-					header('Location: '.url_to_redirect_to('index.php'));
-				}
-			}
+		if (array_key_exists('del',$_GET) && is_numeric($_GET['del'])){
+			deleteBook($_GET['del']);
+			header('Location: '.url_to_redirect_to('index.php'));
 		}
-		
-	?>
-	<title>
-		311 Project - Fall 2013
-	</title>
-</head>
-<body>
-<header>
-	<?php
-		require_once("template/header.php");
-	?>
-</header>
-<nav>
-	<?php
-		require_once("template/nav.php");
-	?>
-</nav>
-<section>
-	<article>
-	<header>&nbsp;</header>
+		$title='All Advertised Books';
+		include('includes/template/head.php');
+		?>
 	<?php
 	if (array_key_exists('page',$_GET) && is_numeric($_GET['page'])){
 		$page = intval($_GET['page'])-1;
@@ -48,12 +25,12 @@
 		if (is_numeric($_GET["id"])){
 			displayAd($_GET["id"]);
 		}
-	}else{
-		if (array_key_exists('del',$_GET) && is_numeric($_GET['del'])){
-			deleteBook($_GET['del']);
-		}
+	}else
+	{
 		displayAllAds();
-	}/*
+	}
+	
+	/*
 	if(isset($_GET['action']) && $_GET['action'] == 'post'){
 			//Insert Code for Post
 			if (is_loggedin()){
@@ -130,13 +107,5 @@
 				echo '<br /><h2><a href="?action=post">Create New Topic</a></h2></article>';
 			}
 	}*/
-	?>
-    </article>
-</section>
-<footer>
-	<?php
-		require_once("template/footer.php");
-	?>
-</footer>
-</body>
-</html>
+
+	require_once("includes/template/foot.php");

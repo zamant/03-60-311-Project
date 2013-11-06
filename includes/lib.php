@@ -2,23 +2,35 @@
 	//Add useful global functions here, and require_once this file in any files needing them
 	//database.php is already required here so it shouldn't be required in other files
 	session_start();
+	require_once('includes/config.php');
+	require_once('book_lib.php'); // book-related functions.
+	require_once('validation_lib.php');
 	require_once('database.php');
-	//date_default_timezone_set('UTC');
+	
 	authenticateLoginCookie();
 ?>
-	<!--<script src="ckeditor/ckeditor.js"></script>-->
-	<script src="lib.js"></script>
-	<!--<script type="text/javascript" src="ajax.js"></script>-->
-	<link rel="stylesheet" type="text/css" href="base.css" />
-	<link rel="stylesheet" id="coloursheet" type="text/css" href="blackandwhite.css" />
-	<meta charset="UTF-8">
 <?php
-	/*function convertTimeZone($utctime,$offset){
-		$datetime = new DateTime($utctime);
-		$tz = new DateTimeZone('UTC');
-		$datetime->setTimeZone($tz);
-		return $datetime->format('M j Y, h:i A');
-	}*/
+
+	function requireLogin()
+	{
+		if (!is_loggedin())
+		{
+			url_to_redirect_to('login.php');
+			exit(0);
+		}
+	}
+
+	function print_head_snippet()
+	{
+			?>
+		<script type="text/javascript" src="js/lib.js">
+		</script>
+		<link rel="stylesheet" type="text/css" href="css/base.css" />
+		<link rel="stylesheet" id="coloursheet" type="text/css" href="css/blackandwhite.css" />
+		<meta charset="UTF-8">
+	<?php	
+	}
+
 	function is_loggedin(){
 	//Self-explanitory, internal workings could change but otherwise just verifies the current user is logged-in
 		return array_key_exists('user',$_SESSION);
@@ -63,111 +75,6 @@
 		}
 		return $sxml->asXML();
 	}
-	/*function createInput($action, $name, $title="", $postid="", $i=""){
-		if ($action == "mail.php"){
-			echo '<form action="'.$action.'" method="post">';
-				form_text_field(
-						'Subject:', 
-						'Subject of the message', 
-						true,
-						$title, 
-						$title,
-						'text'
-					);
-				echo '<input type="hidden" name="post_id" id="post_id" value ="'.$postid.'">';
-				
-				?>
-				</textarea>
-				<input type="submit" value="Send">
-				</form>
-				<?php
-		}else{
-		if($postid){
-			if($title){
-				$_SESSION[$title] = getTopic($postid['Topic'])['Title'];
-				echo '<form action="'.$action.'" method="post">';
-				form_text_field(
-						'Topic:', 
-						'Title of the new Topic', 
-						true,
-						$title, 
-						$title,
-						'text'
-					);
-				$_SESSION[$title] = "";
-				echo '<input type="hidden" name="post_id" id="post_id" value ="'.$i.'">';
-
-				echo $postid['Body'];
-				?>
-				
-				</textarea>
-				<input type="submit" value="Save Changes">
-				</form>
-				
-				<?php
-				
-			}
-			else{
-				//Editing Post
-				echo '<form action="'.$action.'" method="post">';
-				echo '<input type="hidden" name="post_id" id="post_id" value ="'.$i.'">';
-
-				echo $postid['Body'];
-				?>
-				</textarea>
-				
-				<input type="submit" value="Save Changes">
-				</form>
-				
-				<?php
-			}
-		
-		}elseif ($title){
-			echo '<form action="'.$action.'" method="post">';
-			form_text_field(
-					'New Thread Topic:', 
-					'Title of the new Topic', 
-					true,
-					$title, 
-					$title,
-					'text'
-				);
-			
-			?>
-			</textarea>
-			<input type="submit" value="Create">
-			</form>
-			
-			<?php
-		}else{
-			//Only new Post
-			echo '<form action="'.$action.'" method="post">';
-			?>
-			</textarea>
-			<input type="submit" value="Reply">
-			</form>
-			
-			<?php
-		}}
-	}*/
-	
-	/*function deleteButton($topicid,$postnum){
-		if (is_array($topicid)){
-			error_log("TOPICID ISARRAY: ".var_export($topicid,true));
-		}
-		if (is_array($postnum)){
-			error_log("POSTNUM ISARRAY: ".var_export($postnum,true));
-		}
-		$output = '<form id="'.$postnum.'" action="?'.http_build_query($_GET).'" method="post">';
-		$output .= '<input type="hidden" name="postnum" value ="'.$postnum.'"/>';
-			$output .= '<input type="hidden" name="topicid" value="'.$topicid.'" />';
-			$output .= '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">';
-			$output .= '<g onmouseup="deletePost('.$postnum.') " cursor="pointer">';
-			  $output .=  '<text x="5" y="15" fill="red" >[X]</text>';
-			$output .= '</g></svg>';
-		$output .= '</form>';
-		echo $output;
-	}*/
 	
 	function clear_session()
 	{
@@ -184,10 +91,6 @@
 		  unset($_SESSION[$args[$i].'.err']);
 	  }
 	}
-	/*function parseBBCode($output){
-		$bbcode = new BBCode;
-		return $bbcode->Parse($output);
-	}*/
 	function setLogin($name){
 		$_SESSION['user']=$name;
 	}
@@ -199,10 +102,13 @@
 			setLoginCookie($user[0],time()+60*60*24*30);
 		}
 	}
-
+	
 	function form_text_field($label, $tip, $required, $htmlname, $base_sessid, $type,$size = 0)
 	{//Not wholly necessary, just convenient for the login/registration pages
-	  // Output label...
+
+	  errorCheck($base_sessid);
+
+	// Output label...
 	  echo '
 		  <label for="'.htmlspecialchars($htmlname).'">'.
 		htmlspecialchars($label).'</label>';
@@ -211,13 +117,12 @@
 	  echo '<input type="'.$type.'" name="'.htmlspecialchars($htmlname).'" ';
 	  if (array_key_exists($base_sessid, $_SESSION))
 		echo ' value="'.htmlspecialchars($_SESSION[$base_sessid]).'" ';
-		echo 'id = '.htmlspecialchars($htmlname).' ';
+		echo 'id="'.htmlspecialchars($base_sessid).'" ';
 		if ($size){
 			echo 'size='.$size;
 		}
 	  echo ' />';
 
-	  errorCheck($base_sessid);
 	}
 	function errorCheck($base_sessid){
 	// If there is an error message, output it with an "formerror" CSS class.
@@ -238,23 +143,6 @@
 	  if (array_key_exists('HTTPS', $_SERVER) && $_SERVER['HTTPS'] == 'on')
 		$url .= 's';
 	  return $url.'://'.$_SERVER['SERVER_NAME'].dirname($_SERVER['REQUEST_URI'])."/".urlencode($relative_url);
-	}
-	function is_valid_email_address($email){
-	//Server-side validation, taken from somewhere so we don't have to do this ourselves
-        $qtext = '[^\\x0d\\x22\\x5c\\x80-\\xff]';
-        $dtext = '[^\\x0d\\x5b-\\x5d\\x80-\\xff]';
-        $atom = '[^\\x00-\\x20\\x22\\x28\\x29\\x2c\\x2e\\x3a-\\x3c'.
-            '\\x3e\\x40\\x5b-\\x5d\\x7f-\\xff]+';
-        $quoted_pair = '\\x5c[\\x00-\\x7f]';
-        $domain_literal = "\\x5b($dtext|$quoted_pair)*\\x5d";
-        $quoted_string = "\\x22($qtext|$quoted_pair)*\\x22";
-        $domain_ref = $atom;
-        $sub_domain = "($domain_ref|$domain_literal)";
-        $word = "($atom|$quoted_string)";
-        $domain = "$sub_domain(\\x2e$sub_domain)*";
-        $local_part = "$word(\\x2e$word)*";
-        $addr_spec = "$local_part\\x40$domain";
-        return preg_match("!^$addr_spec$!", $email) ? 1 : 0;
 	}
 	function handleContactForm($adID,$name,$fromemail,$toemail,$message){
 		$errors = '';
@@ -330,16 +218,5 @@
 	}
 	function deleteButton($location,$ID){
 		echo '<input type="button" class="delete" value="[X]" onclick="return deleteAd('.$location.','.$ID.');" />';
-	}
-	function displayAllAds(){
-		$currentuser = currentUser();
-		foreach (getAllBooks() as $book){
-			if ($book['SellerID'] == $currentuser['ID'] || $currentuser['Level'] == 1){
-				deleteButton("'index.php?'",$book["ID"]);
-			}
-			echo '<a href="index.php?id='.$book['ID'].'">';
-			testDBOutputs($book);
-			echo '</a>';
-		}
 	}
 ?>

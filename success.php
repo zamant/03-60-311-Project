@@ -3,7 +3,9 @@
 <head>
 <?php
 error_reporting(E_ALL | E_STRICT);
-require_once("lib.php");
+require_once("includes/lib.php");
+print_head_snippet();
+
 $temp = $_SESSION;
 //===========================================================================
 // Define a function to make it easy to unset() all relevant $_SESSION 
@@ -45,12 +47,12 @@ if (array_key_exists('previous-page',$temp)){
 <body>
   <header>
 	<?php
-		require_once("template/header.php");
+		require_once("includes/template/header.php");
 	?>
 </header>
 <nav>
 	<?php
-		require_once("template/nav.php");
+		require_once("includes/template/nav.php");
 	?>
 </nav>
 <aside>
@@ -67,7 +69,7 @@ if (array_key_exists('previous-page',$temp)){
 </section>
 <footer>
 	<?php
-		require_once("template/footer.php");
+		require_once("includes/template/footer.php");
 	?>
 </footer>
 </body></html>

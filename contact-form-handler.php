@@ -1,51 +1,45 @@
 <?php 
-$errors = '';
-$myemail = 'taphim@hotmail.ca';//<-----Put Your email address here.
-if(empty($_POST['name'])  || 
-   empty($_POST['email']) || 
-   empty($_POST['message']))
+require_once('includes/lib.php');
+
+unset($_SESSION['success']);
+
+if (isset($_POST['book_id'])&&is_numeric($_POST['book_id']))
 {
-    $errors .= "\n Error: all fields are required";
+	$book =  getBookById($_POST['book_id']);
+	if (!$book)
+		unset($book);
 }
+if (!isset($book)):
+	echo 'book_id required';
+	exit(0);
+else:
 
-$name = $_POST['name']; 
-$email_address = $_POST['email']; 
-$message = $_POST['message']; 
+	$errors = '';
+	$seller = getSellerFromBook($book);
+	$myemail = $seller['EMAIL'];
 
-if (!preg_match(
-"/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$/i", 
-$email_address))
-{
-    $errors .= "\n Error: Invalid email address";
-}
+	$error_code = validate_all(array('name','email','message'));
 
-if( empty($errors))
-{
-	$to = $myemail; 
-	$email_subject = "Contact form submission: $name";
-	$email_body = "You have received a new message. ".
-	" Here are the details:\n Name: $name \n Email: $email_address \n Message \n $message"; 
+	if (!$error_code):
+		
+		$name = $_POST['name']; 
+		$email_address = $_POST['email']; 
+		$message = $_POST['message']; 
+
+		$to = $myemail; 
+		$email_subject = "Contact form submission: $name";
+		$email_body = "You have received a new message. ".
+		" Here are the details:\n Name: $name \n Email: $email_address \n Message \n $message"; 
+		
+		$headers = "From: $myemail\n"; 
+		$headers .= "Reply-To: $email_address";
+		
+		mail($to,$email_subject,$email_body,$headers);
+		$_SESSION['success']=TRUE;
+	endif;
 	
-	$headers = "From: $myemail\n"; 
-	$headers .= "Reply-To: $email_address";
+	// redirect back to the form.
+	$url='book_details.php?id='.$book['ID'];
+	header('Location: '.$url);
 	
-	mail($to,$email_subject,$email_body,$headers);
-	//redirect to the 'thank you' page
-	header('Location: contact-form-thank-you.html');
-} 
-?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
-<html>
-<head>
-	<title>Contact form handler</title>
-</head>
-
-<body>
-<!-- This page is displayed only if there is some error -->
-<?php
-echo nl2br($errors);
-?>
-
-
-</body>
-</html>
+endif;

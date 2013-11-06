@@ -3,8 +3,11 @@
 <head>
 <?php
 error_reporting(E_ALL | E_STRICT);
-require_once("lib.php"); 
+require_once("includes/lib.php"); 
 header('Content-Type: text/html');
+
+print_head_snippet();
+
 if (array_key_exists('HTTP_REFERER',$_SERVER)){
 	$_SESSION['previous-page'] = $_SERVER['HTTP_REFERER'];
 }
@@ -14,12 +17,12 @@ if (!array_key_exists('user',$_SESSION)){?>
 <body>
 <header>
 	<?php
-		require_once("template/header.php");
+		require_once("includes/template/header.php");
 	?>
 </header>
 <nav>
 	<?php
-		require_once("template/nav.php");
+		require_once("includes/template/nav.php");
 	?>
 </nav>
 <aside>
@@ -38,8 +41,8 @@ if (!array_key_exists('user',$_SESSION)){?>
 					'Username:', 
 					'Legal name characters including letters, numbers, or spaces.', 
 					true,
-					'luname', 
-					'lusername',
+					'name', 
+					'name',
 					'text'
 				);
 				echo "<br />";
@@ -47,8 +50,8 @@ if (!array_key_exists('user',$_SESSION)){?>
 					'Password:', 
 					'Valid password', 
 					true,
-					'lupass', 
-					'lpassword',
+					'password', 
+					'password',
 					'password'
 				);
 			?><br />
@@ -67,8 +70,8 @@ if (!array_key_exists('user',$_SESSION)){?>
 					'Username:', 
 					'Legal name characters including letters, numbers, or spaces.', 
 					true,
-					'uname', 
-					'rusername',
+					'rname', 
+					'rname',
 					'text'
 				);
 				echo "<br />";
@@ -76,7 +79,7 @@ if (!array_key_exists('user',$_SESSION)){?>
 					'Password:', 
 					'Valid password', 
 					true,
-					'upass', 
+					'rpassword', 
 					'rpassword',
 					'password'
 				);
@@ -86,7 +89,7 @@ if (!array_key_exists('user',$_SESSION)){?>
 					'Valid password', 
 					true,
 					'ucpass', 
-					'rcpassword',
+					'ucpass',
 					'password'
 				);    
 				echo "<br />";
@@ -94,8 +97,8 @@ if (!array_key_exists('user',$_SESSION)){?>
 					'Email:', 
 					'Valid email address', 
 					true,
-					'uemail', 
-					'remailaddress',
+					'remail', 
+					'remail',
 					'text'
 				);
 				echo "<br />";
@@ -103,7 +106,7 @@ if (!array_key_exists('user',$_SESSION)){?>
 					'Postal Code:',
 					'Valid Canadian Postal Code',
 					true,
-					'upostcode',
+					'rpostcode',
 					'rpostcode',
 					'text'
 				);
@@ -115,7 +118,7 @@ if (!array_key_exists('user',$_SESSION)){?>
 </section>
 <footer>
 	<?php
-		require_once("template/footer.php");
+		require_once("includes/template/footer.php");
 	?>
 </footer>
 </body>
@@ -124,5 +127,6 @@ if (!array_key_exists('user',$_SESSION)){?>
 }else{
 	header('Location: '.url_to_redirect_to('index.php'));
 }
+clear_validation_messages();
 exit();
 ?>

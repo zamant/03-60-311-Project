@@ -1,14 +1,6 @@
 * {COLOR: gray;}
 table { border-color: gray;}
-html {
-	background-image: url(images/background.png);
-}
-body, a {
-	color: #FFFFFF;
-}
-header a{
-	color: #000000;
-}
+
 
 section{
 
@@ -59,3 +51,18 @@ nav li	{
 }
 
 div.formerror {color:red;}
+
+.allbooks td
+{
+	border-color: #8D8D8D;
+}
+
+.allbooks td:hover
+{
+	background-color: #3C3C3C;
+}
+
+.seller
+{
+	color: #ff0;
+}

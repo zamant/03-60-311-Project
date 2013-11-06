@@ -5,7 +5,7 @@ td { text-align: center; padding: 2px;}
 h2 {text-align: center;}
 
 html {
-	background-image: url(images/background.png);
+	background-image: url(../images/background.png);
 }
 body, a {
 	color: #FFFFFF;
@@ -137,8 +137,8 @@ article header {
 nav {
 	width: 100%;
 	list-style: none;
-	float:left;
-   width:100%;
+	float:center;
+    width:100%;
 
    border-bottom:4px solid #000;
    overflow:hidden;
@@ -177,7 +177,7 @@ form {
     margin: 0 auto;
 }
 
-label, input {
+label, input, textarea {
     /* in order to define widths */
     display: inline-block;
 }
@@ -188,9 +188,123 @@ label {
     text-align: right;
 }
 
-label + input {
+label + input, label + textarea {
     width: 30%;
     /* large margin-right to force the next element to the new-line
        and margin-left to create a gutter between the label and input */
     margin: 0 30% 0 4%;
+}
+
+/* from Taphim */
+.content-center
+{
+	text-align: center;
+}
+
+form input
+{
+	margin-bottom: 6px;
+}
+
+
+.wide
+{
+	width: 100%;
+}
+
+.allbooks td img
+{
+	max-height: 110px;
+	max-width: 140px;
+	clear: both;
+}
+
+.allbooks td
+{
+	padding: 5px;
+	border: 4px solid #000;
+	transition-property: background-color;
+	transition-duration: 0.5s;
+}
+
+
+.allbooks h3
+{
+	color: #fff;
+}
+
+.book_details h1
+{
+	font-size: 2.1em;
+}
+
+.book_details, .book_details p, .book_details span, .book_details h1, .book_details h5, .book_details h3
+{
+	color: #fff;
+}
+
+.book_details ul
+{
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.book_details ul *
+{
+	color: #f00;
+}
+
+.book_details ul span
+{
+	font-style: italic;
+}
+
+.book_details img
+{
+	border: 3px solid #888;
+	margin-right: 20px;
+	float: left;
+	height: 250px;
+}
+
+.book_details .book_description
+{
+	margin-top: 300px;
+}
+
+.book_details  .content
+{
+	padding-left: 150px;
+}
+
+.book_details .properties
+{
+	float: left;
+}
+
+.book_details table td
+{
+	text-align: left;
+}
+
+.book_details .email_form
+{
+	padding: 0;
+	float: right;
+}
+
+.book_details .email_form input, .book_details .email_form textarea
+{
+	width: 200px;
+} 
+
+.book_details input[type='submit']
+{
+	width: 100%;
+}
+
+.italic
+{
+	font-style: italic;
 }

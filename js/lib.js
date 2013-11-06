@@ -1,4 +1,4 @@
- /*function deletePost(postnum){
+		/*function deletePost(postnum){
 			document.getElementById(postnum).submit();
 		}*/
 		function changeCSS(sel,set){
@@ -41,7 +41,7 @@
 				changeCSS(sel,false);
 			}
 		}
-		function deleteAd(redirect,id){ 
+	function deleteAd(redirect,id){ 
 		  if(confirm("Are you sure you want to delete ad #"+id+"?")==true)
 				   window.location=redirect+"del="+id;
 			return false;

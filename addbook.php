@@ -3,60 +3,62 @@
 <head>
 <?php
 error_reporting(E_ALL | E_STRICT);
-require_once("lib.php"); 
+require_once("includes/lib.php"); 
 header('Content-Type: text/html');
+print_head_snippet();
+
 if (array_key_exists('HTTP_REFERER',$_SERVER)){
 	$_SESSION['previous-page'] = $_SERVER['HTTP_REFERER'];
 }
-if (array_key_exists('user',$_SESSION)){?>
-	<title>Add Book</title>
-</head>
-<body>
-<header>
-	<?php
-		require_once("template/header.php");
-	?>
-</header>
-<nav>
-	<?php
-		require_once("template/nav.php");
-	?>
-</nav>
-<aside>
-</aside>
-<section>
-	<article>
-		<header>Register</header>
+
+requireLogin();
+
+$title='Advertisement Post Form';
+require_once('includes/template/head.php');
+
+
+?>
+		<div class="content-center">
 		Items marked with * are optional.
+		</div>
 		<form action="processaddbook.php" method="POST">
 			<?php 
 				if (array_key_exists('addbook',$_SESSION) && $_SESSION['addbook'] == 'error'){
 					echo '<div class="formerror">Sorry, your submission was not accepted. Please fix the errors below and resubmit.</div>';
 				}
 				echo form_text_field(
-					'Title:', 
+					'*Book Title:',
 					'Legal name characters including letters, numbers, or spaces.', 
 					true,
-					'utitle', 
+					'title', 
 					'title',
 					'text'
 				);
 				echo "<br />";
 				echo form_text_field(
-					'Author:', 
+					'*ISBN:', 
+					'ISBN', 
+					true,
+					'isbn', 
+					'isbn',
+					'text'
+				);
+				echo "<br />";
+				echo form_text_field(
+					'*Book Author:', 
 					'Legal name characters including letters, numbers, or spaces.', 
 					true,
-					'uauthor', 
+					'author', 
 					'author',
 					'text'
 				);
 				echo "<br />";
 				echo form_text_field(
-					'*Price:', 
-					'Price in CAD', 
+					'Image URL:', 
+					'URL', 
 					true,
-					'uprice', 
-					'price',
+					'image_url', 
+					'image_url',
 					'text'
 				);
 				echo "<br />";
@@ -64,27 +66,33 @@ if (array_key_exists('user',$_SESSION)){?>
 					'*Subject:', 
 					'Legal name characters including letters, numbers, or spaces.', 
 					true,
-					'usubject', 
+					'subject', 
 					'subject',
 					'text'
 				);
-				echo '<label for="description">Description</label>';
-				echo '<textarea cols="40" rows="5" name="description"></textarea>';
-			?><br />
-			<input type="submit" value="AddBook" />
+				echo "<br />";
+				echo form_text_field(
+					'Price:', 
+					'Price in CAD', 
+					true,
+					'price', 
+					'price',
+					'text'
+				);
+				?><br/>
+				<label for="description">Book Description:</label>
+				<textarea cols="45" rows="8" name="description"></textarea>
+				<?php	  errorCheck('description');
+						?>
+			<br />
+			<div class="content-center">
+				<input type="submit" value="Post Advertisement" />
+			</div>
 		</form>
-	</article>
-</section>
-<footer>
-	<?php
-		require_once("template/footer.php");
-	?>
-</footer>
-</body>
-</html>
 <?php 
-}else{
-	header('Location: '.url_to_redirect_to('index.php'));
-}
+	require_once('includes/template/foot.php');
+
+clear_validation_messages();
+
 exit();
 ?>
