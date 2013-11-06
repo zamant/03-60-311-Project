@@ -15,8 +15,8 @@
 	{
 		if (!is_loggedin())
 		{
-			url_to_redirect_to('login.php');
-			exit(0);
+			header('Location: '.url_to_redirect_to('login.php'));
+			//exit(0);
 		}
 	}
 
@@ -30,7 +30,9 @@
 		<meta charset="UTF-8">
 	<?php	
 	}
-
+	function is_admin($user){
+		return $user['LEVEL'] == 1;
+	}
 	function is_loggedin(){
 	//Self-explanitory, internal workings could change but otherwise just verifies the current user is logged-in
 		return array_key_exists('user',$_SESSION);

@@ -10,7 +10,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])):
 endif;
 
 if (isset($book) && $book):
-	if ($book['SELLERID'] == $currentuser['ID'] || $currentuser['LEVEL'] == 1){
+	$currentuser = currentUser();
+	if ($book['SELLERID'] == $currentuser['ID'] || is_admin($currentuser)){
 		deleteButton("'index.php?'",$book["ID"]);
 	}
 	?>
