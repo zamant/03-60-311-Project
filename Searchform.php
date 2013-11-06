@@ -3,7 +3,7 @@
 	 Tittle:<input type="text" name="title"/><br>
 	 Author:<input type="text" name="author"/><br>
 	 ISBN:  <input type="text" name="ISBN"/><br>
-	 Subject: <input type="text" name="Subject"/><br>
+	 Subject: <input type="text" name="subject"/><br>
 	 Edition:<select name="edition" id="edtion">
              <option value="e1">1</option>
              <option value="e2">2</option>
