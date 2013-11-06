@@ -7,15 +7,19 @@ if(isset($_POST['submit']))
  if(isset($_POST['title']) && $_POST['title']!="")
      $title=$_POST['title'];
      $query.=" && Title='".$title."'";
-     echo $title;
+    // echo $title;
  if(isset($_POST['author']) && $_POST['author']!="")
      $author=$_POST['author'];
      $query.=" && Author='".$author."'";
-     echo $author;    
+     //echo $author;    
  if(isset($_POST['ISBN']) && $_POST['ISBN']!="")
      $ISBN=$_POST['ISBN'];
      $query.=" && ISBN='".$ISBN."'";
-     echo $ISBN;
+     //echo $ISBN;
+ if(isset($_POST['subject']) && $_POST['subject']!="")
+     $subject=$_POST['subject'];
+     $query.=" && Subject='".$subject."'";
+     //echo $subject;
  /*if(isset($_POST['edition']) && $_POST['edition']!="")
      $edition=$_POST['edition'];
      $query.=" && edition='".$edition."'";
