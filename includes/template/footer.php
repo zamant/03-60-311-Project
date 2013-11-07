@@ -5,5 +5,5 @@ Theme:
   <option value="css/blue.css">Blue</option>
 </select> 
 <script type="text/javascript">
-	checkColourCookie();
+	checkCookies();
 </script>

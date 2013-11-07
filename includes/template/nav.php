@@ -8,11 +8,11 @@
 ?>
 		
 <?php
-		}else{
+		}
 ?>
 <li><a href="addbook.php">Post a Book Advertisement</a></li>
 <li><a href="searchbook.php">Edit/Delete Advertisement</a></li>
 <li><a href="logout.php">Logout</a></li>
-<?php 	}
+<?php 	
 	}?>
 </ul>

@@ -107,10 +107,10 @@
 	function getAllPostsXML($topic_id,$page,$max){
 		return arrayToXML(getAllPosts($topic_id,$page,$max));
 	}*/
-	function getAllUsers($page=0,$max=100){
-	//Page and Max are for if want to only show so many users on one screen. Otherwise make sure to pass a $page of 0 and a sufficiently large $max
+	function getAllUsers($page=1,$max=100){
+	//Page and Max are for if want to only show so many users on one screen. Otherwise make sure to pass a $page of 1 and a sufficiently large $max
 	//Output is an array of arrays, indexed by numerical userID
-		$result = dbquery('SELECT * FROM users ORDER BY ID LIMIT ?,?',$page*$max,$max);
+		$result = dbquery('SELECT * FROM users ORDER BY ID LIMIT ?,?',($page-1)*$max,$max);
 		$row = $result->fetch(PDO::FETCH_ASSOC);
 		$output = array();
 		while ($row && ($max-- > 0)){
@@ -119,9 +119,12 @@
 		}
 		return $output;
 	}
-	function getAllBooks($page=0,$max=100,$orderby = 'ID'){
+	function getAllBooks($page=1,$max=25,$orderby = 'ID',$desc = true){
 		//As above with page and max
-		$result = dbquery('SELECT * FROM books ORDER BY '.$orderby.' LIMIT ?,?',$page*$max,$max);
+		if ($desc){
+			$dir = 'DESC';
+		}
+		$result = dbquery('SELECT * FROM books ORDER BY '.$orderby.' '.$dir.' LIMIT ?,?',($page-1)*$max,$max);
 		$row = $result->fetch(PDO::FETCH_ASSOC);
 		$output = array();
 		while ($row && ($max-- > 0)){
@@ -130,8 +133,8 @@
 		}
 		return $output;
 	}
-	function getAllBooksBySeller($page=0,$max=100,$sellerid){
-		$result = dbquery('SELECT * FROM books WHERE SELLERID = ? ORDER BY '.$orderby.' LIMIT ?,?',$sellerid,$page*$max,$max);
+	function getAllBooksBySeller($page=1,$max=25,$sellerid,$orderby = 'ID'){
+		$result = dbquery('SELECT * FROM books WHERE SELLERID = ? ORDER BY '.$orderby.' LIMIT ?,?',$sellerid,($page-1)*$max,$max);
 		$row = $result->fetch(PDO::FETCH_ASSOC);
 		$output = array();
 		while ($row && ($max-- > 0)){
@@ -175,14 +178,13 @@
 	function getBook($id){
 		return getRowById($id,'books');		
 	}
-
+	function getNumBooks(){
+		$result = dbquery('SELECT COUNT(*) FROM books');
+		return $result->fetch()[0];
+	}
 	function getSalt(){
 	//Password salt for additional security. Not necessary and should probably be done some other way, but it works.
 		return md5("311");
-	}
-	function getUserLevel($username){
-		$user = getUser($username);
-		return $user['Level'];
 	}
 //END GET
 

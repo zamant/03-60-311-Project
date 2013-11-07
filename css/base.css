@@ -19,6 +19,12 @@ a {
 a.postlink{
  float:right;
 }
+div.right{
+ text-align:right;
+}
+div.left{
+ float:left;
+}
 input.delete{
 	background: none;
 	border: none;

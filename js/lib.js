@@ -28,6 +28,10 @@
 			var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
 			document.cookie=c_name + "=" + c_value;
 		}
+		function checkCookies(){
+			checkColourCookie();
+			checkPageMaxCookie();
+		}
 		function checkColourCookie(){
 			var cookie = readCookie('colorsheet');
 			if (cookie != null){
@@ -40,6 +44,27 @@
 				}
 				changeCSS(sel,false);
 			}
+		}
+		function checkPageMaxCookie(){
+			var cookie = readCookie('pagemax');
+			if (cookie != null){
+				var sel = document.getElementById('pagemax');
+				for(var i=0;i<sel.options.length;i++){
+					if (sel.options[i].value == cookie) {
+						sel.selectedIndex = i;
+						break;
+					}
+				}
+				changePageMax(sel,false);
+			}
+		}
+		function changePageMax(sel,set){
+			 var value = sel.options[sel.selectedIndex].value;
+			 document.getElementById('pagemax').href = value;
+			 if (set){
+				setCookie('pagemax',value,30);
+				location.reload(false);
+			 }
 		}
 	function deleteAd(redirect,id){ 
 		  if(confirm("Are you sure you want to delete ad #"+id+"?")==true)
