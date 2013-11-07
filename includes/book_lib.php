@@ -49,16 +49,14 @@ function print_book_image($book)
 			?>" />
 			<?php
 }
-	
-function displayAllAds($page=1,$max=25)
-{
+function displayAds($adsToDisplay){
 	$num_columns = 5;
 	$i = 0;
 	?><table class="wide allbooks">
 		<tbody><?php
 	
 	// loop through all the books.
-	foreach (getAllBooks($page,$max) as $book)
+	foreach ($adsToDisplay as $book)
 	{
 		if ($i%$num_columns==0):
 			?><tr><?php
@@ -108,4 +106,8 @@ function displayAllAds($page=1,$max=25)
 	endif;
 	
 	?></tbody></table><?php
+}
+function displayAllAds($page=1,$max=25)
+{
+	displayAds(getAllBooks($page,$max));
 }
