@@ -1,6 +1,6 @@
 <ul>
 <li><a href="index.php">All Used Books Ad</a></li>
-<li><a href="searchbook.php">Search For Books</a></li>
+<li><a href="searchform.php">Search For Books</a></li>
 <?php if (!is_loggedin()){?>
 <li><a href="login.php">Login/Register</a></li>
 <?php }else{

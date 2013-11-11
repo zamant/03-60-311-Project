@@ -107,7 +107,40 @@ function displayAds($adsToDisplay){
 	
 	?></tbody></table><?php
 }
-function displayAllAds($page=1,$max=25)
+function displayAllAds($url,$page=1,$max=25)
 {
+	$numbooks = getNumBooks();
+	$maxpage = ceil($numbooks/$max);
+	if ($page < 1){
+		header('Location: '.url_to_redirect_to($url));
+	}
+	if (($page-1)*$max > $numbooks){
+		header('Location: '.url_to_redirect_to($url).'?page='.$maxpage);
+	}
+	if ($page > 1){
+		echo '<div class="left">';
+		echo '<a href="'.$url.'?page=1">&lt;&lt;First page </a>';
+		echo '<a href="'.$url.'?page='.($page-1).'">&lt;Previous page </a>';
+		echo '</div>';
+	}
+	if ($page < $maxpage){
+		echo '<div class="right">';
+		echo '<a href="'.$url.'?page='.($page+1).'"> Next page&gt;</a>';
+		echo '<a href="'.$url.'?page='.($maxpage).'"> Last page&gt;&gt;</a>';
+		echo '</div>';
+	}
 	displayAds(getAllBooks($page,$max));
+	?>
+	<div class="right">
+	Ads per page:
+	<select id="pagemax" onchange="changePageMax(this,true)">
+		<option value="5">5</option>
+		<option value="10">10</option>
+		<option value="25">25</option>
+		<option value="50">50</option>
+		<option value="100">100</option>
+	</select>
+	</div>
+	<?php
 }
+?>

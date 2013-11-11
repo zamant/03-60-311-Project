@@ -109,3 +109,4 @@ endif;
 ?></article><?php
 
 include('includes/template/foot.php');
+?>

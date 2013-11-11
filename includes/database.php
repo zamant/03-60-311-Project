@@ -27,6 +27,7 @@
 	function dbquery(){
 		$args = func_get_args();
 		$numargs = func_num_args();
+		//var_dump($args);
 		$query = $args[0];
 		$dbh = getDB();
 		$stmt = $dbh->prepare($query);
@@ -121,6 +122,7 @@
 	}
 	function getAllBooks($page=1,$max=25,$orderby = 'ID',$desc = true){
 		//As above with page and max
+		$dir = "";
 		if ($desc){
 			$dir = 'DESC';
 		}
@@ -147,7 +149,25 @@
 		return arrayToXML(getAllUsers($page,$max),"User");
 	}
 //END GETALL
-
+	function getNumSearchResults($title,$author,$ISBN,$subject){
+		$result = dbquery('SELECT COUNT(*) FROM books WHERE (UPPER(Title) LIKE ?) OR (UPPER(Author) LIKE ?) OR (UPPER(ISBN) LIKE ?) OR (UPPER(Subject) LIKE ?)',$title,$author,$ISBN,$subject);
+		return $result->fetch()[0];
+	}
+	function searchAllBooks($title,$author,$ISBN,$subject,$page = 1,$max = 25,$orderby = 'ID',$desc = true){
+		//var_dump(func_get_args());
+		$dir = "";
+		if ($desc){
+			$dir = 'DESC';
+		}
+		$result = dbquery('SELECT * FROM books WHERE (UPPER(Title) LIKE ?) OR (UPPER(Author) LIKE ?) OR (UPPER(ISBN) LIKE ?) OR (UPPER(Subject) LIKE ?) ORDER BY '.$orderby.' '.$dir.' LIMIT ?,?',$title,$author,$ISBN,$subject,($page-1)*$max,$max);
+		$row = $result->fetch(PDO::FETCH_ASSOC);
+		$output = array();
+		while ($row && ($max-- > 0)){
+			$output[$row['ID']] =$row;
+			$row = $result->fetch(PDO::FETCH_ASSOC);
+		}
+		return $output;
+	}
 //GET
 
 
