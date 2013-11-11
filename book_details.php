@@ -27,21 +27,26 @@ if (isset($book) && $book):
 		?>
 			<div class="properties">
 				<ul>
-					<li>ISBN: <?php
+					<li><b>ISBN: </b><?php
 					echo htmlspecialchars($book['ISBN']);
-					?></li><li>SUBJECT: <?php
+					?></li><li><b>SUBJECT: </b><?php
 					echo htmlspecialchars($book['SUBJECT']);
-					?></li><li>POSTED ON: <?php
+					?></li><li><b>POSTED ON: </b><?php
 					echo htmlspecialchars($book['TIMESTAMP']);
-					?></li><li>STATUS: <span><?php
+					?></li><li><b>STATUS: </b><span><?php
 					if ($book['PRICE']=='0.00'):
 						echo 'For Exchange';
 					else:
 						echo 'Price CAD $'.$book['PRICE'];
 					endif;
-					
 					?></span>
-					</li>
+					</li><li><b>CONTACT NO: </b><span><?php
+					if ($book['CONTACTNO']=='0'):
+						echo 'Unavailable!';
+					else:
+						echo htmlspecialchars($book['CONTACTNO']);
+					endif;
+					?></span></li>
 				</ul>
 			</div>
 			<div class="email_form">
@@ -92,7 +97,9 @@ if (isset($book) && $book):
 				?>
 			</div>
 		
-		<h3 class="book_description">Book Description</h3><p><?php
+		<h3 class="book_description">Book Description:</h3>
+		<div style="width:990px;height:100px;border:5px double darkgrey;">
+		<p><?php
 		if (!$book['DESCRIPTION']
 		/*|| strlen($book['DESCRIPTION'])<10 Matt - Why is this a condition?*/
 		):
@@ -109,4 +116,3 @@ endif;
 ?></article><?php
 
 include('includes/template/foot.php');
-?>
