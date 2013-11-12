@@ -20,7 +20,11 @@ require_once('includes/template/head.php');
 ?>
 
 <!------------Code goes here------------->
-<p align=center style="font-size:20px">Under Construction!</p>
+<center>
+	<p align=center style="font-size:20px">Page Under Construction!</p>
+</br>
+	<img src="images\workgoingon.png" alt="image"/>
+</center>
 <!--------------------------------------->
 
 <?php 
