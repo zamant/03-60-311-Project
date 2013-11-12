@@ -72,6 +72,15 @@ require_once('includes/template/head.php');
 				);
 				echo "<br />";
 				echo form_text_field(
+					'Contact No:', 
+					'Contact', 
+					true,
+					'contactno', 
+					'contactno',
+					'text'
+				);
+				echo "<br />";
+				echo form_text_field(
 					'Price:', 
 					'Price in CAD', 
 					true,
