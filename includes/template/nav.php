@@ -11,7 +11,7 @@
 		}
 ?>
 <li><a href="addbook.php">Post a Book Advertisement</a></li>
-<li><a href="#">Edit/Delete Advertisement</a></li>
+<li><a href="userpanel.php">Edit/Delete Advertisement</a></li>
 <li><a href="cart.php">View Cart</a></li>
 <li><a href="logout.php">Logout</a></li>
 <?php 	
