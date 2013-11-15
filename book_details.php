@@ -44,7 +44,7 @@ if (isset($book) && $book):
 					if ($book['CONTACTNO']=='0'):
 						echo 'Unavailable!';
 					else:
-						echo htmlspecialchars($book['CONTACTNO']);
+						echo formatPhoneNumber(htmlspecialchars($book['CONTACTNO']));
 					endif;
 					?></span></li>
 				</ul>
@@ -98,8 +98,7 @@ if (isset($book) && $book):
 			</div>
 		
 		<h3 class="book_description">Book Description:</h3>
-		<div style="width:990px;height:100px;border:5px double darkgrey;">
-		<p><?php
+		<p> <?php
 		if (!$book['DESCRIPTION']
 		/*|| strlen($book['DESCRIPTION'])<10 Matt - Why is this a condition?*/
 		):
@@ -113,6 +112,6 @@ else:
 	?>Invalid book id in URL.<?php
 endif;
 
-?></article><?php
+
 
 include('includes/template/foot.php');

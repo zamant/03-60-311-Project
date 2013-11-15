@@ -221,4 +221,10 @@
 	function deleteButton($location,$ID){
 		echo '<input type="button" class="delete" value="[X]" onclick="return deleteAd('.$location.','.$ID.');" />';
 	}
+	function formatPhoneNumber($stringnum){
+		if (strlen($stringnum) != 10){
+			return false;
+		}
+		return preg_replace('~.*(\d{3})[^\d]*(\d{3})[^\d]*(\d{4}).*~', '($1) $2-$3', $stringnum);
+	}
 ?>

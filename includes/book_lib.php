@@ -5,11 +5,11 @@ a library of book-related functions
 */
 
 
-function newBook($title,$sellerid,$author,$price,$subject,$description,$isbn,$image_url){
-	return dbquery('INSERT INTO books(Title,SellerID,Author,Price,Subject,Description,isbn,image_url) VALUES (?,?,?,?,?,?,?,?)',
+function newBook($title,$sellerid,$author,$price,$subject,$description,$isbn,$image_url,$contactno){
+	return dbquery('INSERT INTO books(Title,SellerID,Author,Price,Subject,Description,isbn,image_url,contactno) VALUES (?,?,?,?,?,?,?,?,?)',
 	$title,$sellerid,$author,
 	$price,$subject,
-	$description,$isbn,$image_url
+	$description,$isbn,$image_url,$contactno
 	);
 }
 

@@ -248,7 +248,16 @@ form input
 {
 	color: #fff;
 }
-
+.book_details p, .book_description
+{
+	clear:right;
+}
+.book_details p
+{
+	width:80%;
+	height:20%;
+	border:5px double darkgrey;
+}
 .book_details ul
 {
 	list-style-type: none;
@@ -307,7 +316,8 @@ form input
 
 .book_details input[type='submit']
 {
-	width: 100%;
+	width: 70%;
+	float:left;
 }
 
 .italic
