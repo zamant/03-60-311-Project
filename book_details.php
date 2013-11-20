@@ -100,7 +100,7 @@ if (isset($book) && $book):
 		<h3 class="book_description">Book Description:</h3>
 		<p> <?php
 		if (!$book['DESCRIPTION']
-		/*|| strlen($book['DESCRIPTION'])<10 Matt - Why is this a condition?*/
+		/*|| strlen($book['DESCRIPTION'])<10 Matt - Why is this a condition?- because I dont want to display anything less then length 10, just put this condition, by any chance if database field have some unwanted thing.*/
 		):
 			?><span class="italic">No description found.</span><?php
 		else:
