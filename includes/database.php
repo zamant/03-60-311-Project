@@ -289,4 +289,17 @@
 		setcookie('user', $name."|".$token, $expire);
 		return $name;
 	}
+	function get_product_name($pid){
+		$result = dbquery('SELECT Title FROM books WHERE ID=?',$pid);
+		return $result;
+	}
+	function get_price($pid){
+		$result = dbquery('SELECT Price FROM books WHERE ID=?',$pid);
+		error_log("".$result);
+		return $result;
+	}
+    function get_seller($pid){
+		$result = dbquery('SELECT Email FROM user WHERE ID=?',$pid);
+		return $result;
+	}
 ?>

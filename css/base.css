@@ -218,10 +218,10 @@ form input
 	width: 100%;
 }
 
-.allbooks td img
+.allbooks td img, .allbooks td input[type="image"]
 {
-	max-height: 110px;
-	max-width: 140px;
+	max-height: 80%;
+	max-width: 100%;
 	clear: both;
 }
 
@@ -323,4 +323,11 @@ form input
 .italic
 {
 	font-style: italic;
+}
+
+.book_details .addtocart
+{
+height:100%;
+float:right;
+border:none;
 }

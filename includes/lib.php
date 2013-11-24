@@ -2,7 +2,7 @@
 	//Add useful global functions here, and require_once this file in any files needing them
 	//database.php is already required here so it shouldn't be required in other files
 	session_start();
-	require_once('includes/config.php');
+	require_once('config.php');
 	require_once('book_lib.php'); // book-related functions.
 	require_once('validation_lib.php');
 	require_once('database.php');
@@ -221,10 +221,88 @@
 	function deleteButton($location,$ID){
 		echo '<input type="button" class="delete" value="[X]" onclick="return deleteAd('.$location.','.$ID.');" />';
 	}
+	function addtocartButton($location,$ID){
+		echo '<a href="'.$location.'addtocart='.$ID.'"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_SM.gif" class="addtocart"/></a>';
+	}
 	function formatPhoneNumber($stringnum){
 		if (strlen($stringnum) != 10){
 			return false;
 		}
 		return preg_replace('~.*(\d{3})[^\d]*(\d{3})[^\d]*(\d{4}).*~', '($1) $2-$3', $stringnum);
+	}
+	
+	
+	function remove_product($pid){
+		$pid=intval($pid);
+		$max=count($_SESSION['cart']);
+		for($i=0;$i<$max;$i++){
+			if($pid==$_SESSION['cart'][$i]['productid']){
+				unset($_SESSION['cart'][$i]);
+				break;
+			}
+		}
+		$_SESSION['cart']=array_values($_SESSION['cart']);
+	}
+	function get_order_total(){
+		$sum=0;
+		foreach($_SESSION['cart'] as $item){
+			$book = getBook($item['productid']);
+			$quantity = $item['qty'];
+			$price=$book['PRICE'];
+			$sum+=$price*$quantity;
+		}
+		return $sum;
+	}
+	function get_order_total_old(){
+		$max=count($_SESSION['cart']);
+		$sum=0;
+		for($i=0;$i<$max;$i++){
+			$pid=$_SESSION['cart'][$i]['productid'];
+			$q=$_SESSION['cart'][$i]['qty'];
+			$price=get_price($pid);
+			$sum+=$price*$q;
+		}
+		return $sum;
+	}
+	function addtocart($pid,$q){
+		error_log("TESTING1");
+		if($pid<1 or $q<1) return;
+		error_log("TESTING2");
+		if(is_array($_SESSION['cart'])){
+		error_log("TESTING3");
+			if(product_exists($pid)) return;
+			error_log("TESTING4");
+			$max=count($_SESSION['cart']);
+			$_SESSION['cart'][$max]['productid']=$pid;
+			$_SESSION['cart'][$max]['qty']=$q;
+		}
+		else{
+		error_log("TESTING5");
+			$_SESSION['cart']=array();
+			$_SESSION['cart'][0]['productid']=$pid;
+			$_SESSION['cart'][0]['qty']=$q;
+		}
+	}
+	function product_exists($pid){
+		$pid=intval($pid);
+		$max=count($_SESSION['cart']);
+		$flag=0;
+		for($i=0;$i<$max;$i++){
+			if($pid==$_SESSION['cart'][$i]['productid']){
+				$flag=1;
+				break;
+			}
+		}
+		return $flag;
+	}
+	function isInCart($id){
+		if (array_key_exists('cart',$_SESSION)){
+			foreach ($_SESSION['cart'] as $item){
+				if ($item['productid'] == $id){
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 ?>

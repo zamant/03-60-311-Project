@@ -7,6 +7,10 @@
 		deleteBook($_GET['del']);
 		header('Location: '.url_to_redirect_to('index.php'));
 	}
+	if (array_key_exists('addtocart',$_REQUEST) && is_numeric($_REQUEST['addtocart'])){
+	addtocart($_REQUEST['addtocart'],1);
+	header('Location: '.url_to_redirect_to('index.php'));
+}
 	$title='All Advertised Books';
 	
 	require_once('includes/template/head.php');

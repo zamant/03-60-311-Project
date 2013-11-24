@@ -6,15 +6,15 @@
 
 print_head_snippet();
 if (array_key_exists('page',$_GET) && is_numeric($_GET['page'])){
-		$page = intval($_GET['page']);
-	}else{
-		$page = 1;
-	}
-	if (array_key_exists('pagemax',$_COOKIE)){
-		$max = intval($_COOKIE['pagemax']);
-	}else{
-		$max = 25;
-	}
+	$page = intval($_GET['page']);
+}else{
+	$page = 1;
+}
+if (array_key_exists('pagemax',$_COOKIE)){
+	$max = intval($_COOKIE['pagemax']);
+}else{
+	$max = 25;
+}	
 ?>
 	<title>
 		311 Project - Fall 2013

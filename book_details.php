@@ -3,11 +3,17 @@ require_once('includes/lib.php');
 
 $title='Book Details';
 $article_class='book_details';
-include('includes/template/head.php');
 
-if (isset($_GET['id']) && is_numeric($_GET['id'])):
+if (isset($_GET['id']) && is_numeric($_GET['id'])){
 	$book = getBookById($_GET['id']);
-endif;
+	if (array_key_exists('addtocart',$_REQUEST) && is_numeric($_REQUEST['addtocart'])){
+		addtocart($_REQUEST['addtocart'],1);
+		header('Location: '.url_to_redirect_to('book_details.php').'?id='.$_GET['id']);
+	}
+}
+
+
+include('includes/template/head.php');
 
 if (isset($book) && $book):
 	$currentuser = currentUser();
@@ -17,13 +23,33 @@ if (isset($book) && $book):
 	?>
 	
 	<div class="content">
+	<?php if ($book['PRICE'] != '0.00'){
+			if (!isInCart($book['ID'])){
+				addtocartButton("book_details.php?id=".$book['ID']."&",$book['ID']);
+			}
+				$pname = $book['TITLE'];
+				$price = $book['PRICE'];
+				?>
+				<form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post"> 
+<input type="hidden" name="business" value="recieve@gmail.com"> <!--<?//=get_seller($pid,$con)?> need to use user email in user table-->
+<input type="hidden" name="cmd" value="_xclick"> 
+<input type="hidden" name="rm" value="2"> 
+<input type="hidden" name="return" value="http://www.sqlview.com/payment/notify.php"> 
+<input type="hidden" name="custom" value="myvalue"> 
+<input type="hidden" name="item_name" value="<?=$pname?>"> 
+<input type="hidden" name="amount" value="<?=$price?>"> 
+<input type="hidden" name="currency_code" value="CAD"> 
+<input class="addtocart" type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynow_SM.gif" border="0" name="submit" alt="Buy Now">
+
+</form>
+			<?php
+		}?>
 		<h1><?php echo htmlspecialchars($book['TITLE']); ?></h1>
 		<h5>Author: <?php echo htmlspecialchars($book['AUTHOR']); ?></h5>
 		
 		<?php
 		
 		print_book_image($book);
-		
 		?>
 			<div class="properties">
 				<ul>

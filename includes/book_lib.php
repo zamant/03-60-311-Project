@@ -81,7 +81,7 @@ function displayAds($adsToDisplay){
 			?>No seller<?php
 		endif;
 		
-		?></strong></br>
+		?></strong><br />
 		<span class="seller italic">
 		<?php
 		$seller=getPriceFromBook($book);
@@ -89,11 +89,17 @@ function displayAds($adsToDisplay){
 		if ($seller['PRICE']!='0.00'):
 			?>CAD: $<?php
 			echo htmlspecialchars($seller['PRICE']);
+			echo '<br />';
+			if (!isInCart($book['ID'])){
+				addtocartButton("index.php?",$book['ID']);
+			}else{
+				echo "[In cart]";
+			}
 		else:
 			?>For Exchange<?php
 		endif;
 		
-		?></span></a></td><?php
+		?></span></td><?php
 		$i++;			
 		if ($i%$num_columns==0):
 			?></tr><?php
