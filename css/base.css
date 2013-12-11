@@ -331,3 +331,85 @@ height:100%;
 float:right;
 border:none;
 }
+
+.user_books
+{
+	margin: auto;
+	width: 80%;
+}
+
+.user_books, .user_books ul, .user_books h3
+{
+	text-align: left;
+}
+
+.user_books img
+{
+	height: 150px;
+	margin: 5px 5px 5px 20px;
+	float: left;
+}
+
+.user_books ul
+{
+	list-style-type: none;
+	padding: 0;
+}
+
+.user_books a
+{
+	display: block;
+	text-align: right;
+	padding: 5px 20px;
+	margin-right: 20px;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.user_books a:hover
+{
+	text-decoration: underline;
+}
+
+.user_books td
+{
+	vertical-align: top;
+}
+
+.user_books td:last-child
+{
+	vertical-align: middle;
+	width: 210px;
+	padding-left: 10px;
+}
+
+.user_books td:first-child
+{
+	width: 160px;
+}
+
+
+.user_books h3, .user_books li
+{
+	color: #fff;
+}
+
+.user_books h3
+{
+  font-size: 1.3em;
+}
+
+.user_books a
+{
+	background-color: #888;
+	border: 1px solid #eee;
+	margin-top: 2px;
+	box-shadow: 0 0 10px #ccc inset;
+}
+
+.user_books a:hover
+{
+	background-color: #555;
+	border: 1px solid #ccc;
+	box-shadow: 0 0 10px #aaa inset;
+}

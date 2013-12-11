@@ -93,6 +93,10 @@
 		  unset($_SESSION[$args[$i].'.err']);
 	  }
 	}
+	
+	/**
+	$name is a user name.
+	*/
 	function setLogin($name){
 		$_SESSION['user']=$name;
 	}
@@ -222,7 +226,7 @@
 		echo '<input type="button" class="delete" value="[X]" onclick="return deleteAd('.$location.','.$ID.');" />';
 	}
 	function addtocartButton($location,$ID){
-		echo '<a href="'.$location.'addtocart='.$ID.'"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_SM.gif" class="addtocart"/></a>';
+			echo '<a href="'.$location.'addtocart='.$ID.'"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_cart_SM.gif" class="addtocart"/></a>';
 	}
 	function formatPhoneNumber($stringnum){
 		if (strlen($stringnum) != 10){
@@ -265,19 +269,15 @@
 		return $sum;
 	}
 	function addtocart($pid,$q){
-		error_log("TESTING1");
+	if (!is_loggedin()) return;
 		if($pid<1 or $q<1) return;
-		error_log("TESTING2");
 		if(is_array($_SESSION['cart'])){
-		error_log("TESTING3");
 			if(product_exists($pid)) return;
-			error_log("TESTING4");
 			$max=count($_SESSION['cart']);
 			$_SESSION['cart'][$max]['productid']=$pid;
 			$_SESSION['cart'][$max]['qty']=$q;
 		}
 		else{
-		error_log("TESTING5");
 			$_SESSION['cart']=array();
 			$_SESSION['cart'][0]['productid']=$pid;
 			$_SESSION['cart'][0]['qty']=$q;

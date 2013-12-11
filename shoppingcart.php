@@ -1,6 +1,7 @@
 <?
+
 	require_once('includes/lib.php');
-	
+	requireLogin();
 	if($_REQUEST['command']=='delete' && $_REQUEST['pid']>0){
 		remove_product($_REQUEST['pid']);
 	}

@@ -18,10 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	}else{
 		$_SESSION['searchterms']['author'] = "%".strtoupper($_POST['author'])."%";
 	}
-	if (empty($_POST['ISBN'])){
+	if (empty($_POST['isbn'])){
 		$_SESSION['searchterms']['ISBN'] = "a";
 	}else{
-		$_SESSION['searchterms']['ISBN'] = "%".strtoupper($_POST['ISBN'])."%";
+		$_SESSION['searchterms']['ISBN'] = "%".strtoupper($_POST['isbn'])."%";
 	}
 	if (empty($_POST['subject'])){
 		$_SESSION['searchterms']['subject'] = "a";

@@ -28,7 +28,6 @@ if (!array_key_exists('user',$_SESSION)){?>
 <aside>
 </aside>
 <section>
-	<!--I'm using tables for layout. Sue me. - Matt-->
 	<table><tr><td>
 		<article>
 		<header>Login</header>

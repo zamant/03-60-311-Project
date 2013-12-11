@@ -8,8 +8,9 @@
 		header('Location: '.url_to_redirect_to('index.php'));
 	}
 	if (array_key_exists('addtocart',$_REQUEST) && is_numeric($_REQUEST['addtocart'])){
-	addtocart($_REQUEST['addtocart'],1);
-	header('Location: '.url_to_redirect_to('index.php'));
+		requireLogin();
+		addtocart($_REQUEST['addtocart'],1);
+		header('Location: '.url_to_redirect_to('index.php'));
 }
 	$title='All Advertised Books';
 	

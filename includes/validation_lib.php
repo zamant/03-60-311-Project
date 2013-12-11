@@ -118,7 +118,7 @@ function validate_rname($value)
 	if ($result!='')
 		return $result;
 		
-	  $testval = dbquery('SELECT * FROM Users WHERE Name = ?',$_POST['rname']);
+	  $testval = dbquery('SELECT * FROM users WHERE Name = ?',$_POST['rname']);
 	  
 	  if ( $testval->fetchColumn() ){
 		// Username already exists, so store session error message...
@@ -173,7 +173,7 @@ function validate_remail($value)
 		return $result;
 		
   // Check for existing email address
-  $query = dbquery('SELECT * FROM Users WHERE Email = ?',$_POST['uemail']);
+  $query = dbquery('SELECT * FROM users WHERE Email = ?',$_POST['uemail']);
   if ($query->fetchColumn())
   {
     // Email already exists, so store session error message...

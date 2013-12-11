@@ -120,31 +120,17 @@
 		}
 		return $output;
 	}
-	function getAllBooks($page=1,$max=25,$orderby = 'ID',$desc = true){
-		//As above with page and max
-		$dir = "";
-		if ($desc){
-			$dir = 'DESC';
-		}
-		$result = dbquery('SELECT * FROM books ORDER BY '.$orderby.' '.$dir.' LIMIT ?,?',($page-1)*$max,$max);
+	
+	function getUserIDFromUsername($username)
+	{
+		$result = dbquery('SELECT * FROM users where name=?',$username);
 		$row = $result->fetch(PDO::FETCH_ASSOC);
-		$output = array();
-		while ($row && ($max-- > 0)){
-			$output[$row['ID']] =$row;
-			$row = $result->fetch(PDO::FETCH_ASSOC);
+		if ($row){
+			return $row['ID'];
 		}
-		return $output;
+		return false; // not found
 	}
-	function getAllBooksBySeller($page=1,$max=25,$sellerid,$orderby = 'ID'){
-		$result = dbquery('SELECT * FROM books WHERE SELLERID = ? ORDER BY '.$orderby.' LIMIT ?,?',$sellerid,($page-1)*$max,$max);
-		$row = $result->fetch(PDO::FETCH_ASSOC);
-		$output = array();
-		while ($row && ($max-- > 0)){
-			$output[$row['ID']] = $row;
-			$row = $result->fetch(PDO::FETCH_ASSOC);
-		}
-		return $output;
-	}
+	
 	function getAllUsersXML($page,$max){
 		return arrayToXML(getAllUsers($page,$max),"User");
 	}
@@ -195,13 +181,7 @@
 	function getUserByID($id){
 		return getRowById($id,'users');		
 	}
-	function getBook($id){
-		return getRowById($id,'books');		
-	}
-	function getNumBooks(){
-		$result = dbquery('SELECT COUNT(*) FROM books');
-		return $result->fetch()[0];
-	}
+
 	function getSalt(){
 	//Password salt for additional security. Not necessary and should probably be done some other way, but it works.
 		return md5("311");
@@ -257,23 +237,7 @@
 		}
 	}
 //END CHECK
-//DELETE
-	function deleteBook($book_id){
-		$book = getBook($book_id);
-		$currentuser = currentUser();
-		if (is_int($currentuser)){
-			return 0;
-		}
-		if ($currentuser['ID'] == $book['SELLERID'] || $currentuser['LEVEL'] == 1){
-			$result = dbquery('DELETE FROM books WHERE ID = ?',$book_id);
-			if (is_int($result) && $result == 0){
-				return 0;
-			}else{
-				return 1;
-			}
-		}
-		return 0;
-	}
+
 //END DELETE
 	function setLoginCookie($name,$expire){
 	//Counterpart to checkLoginCookie

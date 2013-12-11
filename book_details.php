@@ -3,6 +3,7 @@ require_once('includes/lib.php');
 
 $title='Book Details';
 $article_class='book_details';
+include('includes/template/head.php');
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])){
 	$book = getBookById($_GET['id']);
@@ -13,7 +14,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])){
 }
 
 
-include('includes/template/head.php');
 
 if (isset($book) && $book):
 	$currentuser = currentUser();
@@ -50,6 +50,7 @@ if (isset($book) && $book):
 		<?php
 		
 		print_book_image($book);
+		
 		?>
 			<div class="properties">
 				<ul>
@@ -65,8 +66,16 @@ if (isset($book) && $book):
 					else:
 						echo 'Price CAD $'.$book['PRICE'];
 					endif;
-					?></span>
-					</li><li><b>CONTACT NO: </b><span><?php
+					?></span></li>
+					<li><b>SELLER: </b><span><?php
+					$seller=getSellerFromBook($book);
+					if ($seller):
+					echo htmlspecialchars($seller['NAME']);
+					else:
+					echo 'Anonymous';
+					endif;
+					?></span></li>
+					<li><b>CONTACT NO: </b><span><?php
 					if ($book['CONTACTNO']=='0'):
 						echo 'Unavailable!';
 					else:
@@ -126,7 +135,7 @@ if (isset($book) && $book):
 		<h3 class="book_description">Book Description:</h3>
 		<p> <?php
 		if (!$book['DESCRIPTION']
-		/*|| strlen($book['DESCRIPTION'])<10 Matt - Why is this a condition?- because I dont want to display anything less then length 10, just put this condition, by any chance if database field have some unwanted thing.*/
+		/*|| strlen($book['DESCRIPTION'])<10*/
 		):
 			?><span class="italic">No description found.</span><?php
 		else:
@@ -137,7 +146,6 @@ if (isset($book) && $book):
 else:
 	?>Invalid book id in URL.<?php
 endif;
-
 
 
 include('includes/template/foot.php');

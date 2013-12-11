@@ -1,6 +1,10 @@
 <?php 
 require_once('includes/lib.php');
 
+function serverEmail(){
+	return 'post@usedbookxchange.ca';
+}
+
 unset($_SESSION['success']);
 
 if (isset($_POST['book_id'])&&is_numeric($_POST['book_id']))

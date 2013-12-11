@@ -21,7 +21,7 @@ $error_flag = FALSE;
 
 //===========================================================================
 // Check validity of everything and update $_SESSION appropriately...
-$error_flag=validate_all(array('title','author','price','subject','description','isbn','image_url','contactno'));
+$error_flag=validate_all(array('title','author','price','subject','description','isbn','contactno','image_url'));
 
 //===========================================================================
 // Redirect the web browser to either the form (if there were any errors) or
@@ -32,12 +32,16 @@ if (array_key_exists('error', $_SESSION)){
 $_SESSION['forminfo'] = $_POST;
 if (!$error_flag)
 {
-	$book = newBook($_POST['title'],currentUser()['ID'],$_POST['author'],$_POST['price'],$_POST['subject'],$_POST['description'],$_POST['isbn'],$_POST['image_url'],$_POST['contactno']);
-	if (!$book){
+	if (isset($_POST['id'])):
+		$book = updateBook($_POST['id'],$_POST['title'],currentUser()['ID'],$_POST['author'],$_POST['price'],$_POST['subject'],$_POST['description'],$_POST['isbn'],$_POST['contactno'],$_POST['image_url']);
+	else:
+		$book = newBook($_POST['title'],currentUser()['ID'],$_POST['author'],$_POST['price'],$_POST['subject'],$_POST['description'],$_POST['isbn'],$_POST['contactno'],$_POST['image_url']);
+	endif;
+	if (!$book):
 		$error_flag = TRUE;
-	}else{
-		clear_session('forminfo','title','author','price','subject','description','isbn','image_url','contactno');
-	}
+	else:
+		clear_session('forminfo','title','author','price','subject');
+	endif;
 }
 
 // if success, don't continue storing the validation messages

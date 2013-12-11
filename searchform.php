@@ -5,18 +5,7 @@ $title='Search for a book';
 $article_class='search_form';
 include('includes/template/head.php');
 ?>
-<!--
-<div class="content-center">
-<form method="post" action="search.php">
-	 Title:<input type="text" name="title"/><br />
-	 Author:<input type="text" name="author"/><br />
-	 ISBN:  <input type="text" name="ISBN"/><br />
-	 Subject: <input type="text" name="subject"/><br />
-	 <br />
-     <input type="submit" name="submit" value="Search"/>
-</form>
-</div>
--->
+
 <form action="search.php" method="POST">
 			<?php 
 				if (array_key_exists('addbook',$_SESSION) && $_SESSION['addbook'] == 'error'){
